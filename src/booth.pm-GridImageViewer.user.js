@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         booth.pm: Grid Image Viewer
 // @namespace    https://github.com/Elypha/userscript
-// @version      1.2
+// @version      1.3
 // @description  View all preview images in an overlay with a main viewer and a thumbnail grid.
 // @author       Elypha
 // @match        https://booth.pm/*/items/*
@@ -179,7 +179,7 @@
     // --------------------------------
     // Usage:
     // - Tab: Open/close viewer
-    // - Left/Right Arrows: Navigate through images when viewer is open
+    // - Left/Right Arrows, A/D: Navigate through images when viewer is open
     //
     // Notes:
     // - Block default key actions by `event.preventDefault()` to avoid conflicts
@@ -187,8 +187,9 @@
     // - The navigation loops around when reaching the first or last image
     document.addEventListener('keydown', function(event) {
         const overlay = document.querySelector('.image-viewer-overlay');
+        let eventKeyNormalised = event.key.toLowerCase();
 
-        if (event.key === 'Tab') {
+        if (eventKeyNormalised === 'tab') {
             event.preventDefault();
             if (overlay) {
                 document.body.removeChild(overlay);
@@ -199,7 +200,7 @@
         }
 
         if (overlay) {
-            if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+            if (eventKeyNormalised === 'arrowleft' || eventKeyNormalised === 'a' || eventKeyNormalised === 'arrowright' || eventKeyNormalised === 'd') {
                 event.preventDefault();
 
                 const thumbnails = overlay.querySelectorAll('.image-viewer-grid img');
@@ -214,9 +215,9 @@
 
                 let newIndex = currentIndex;
 
-                if (event.key === 'ArrowLeft') {
+                if (eventKeyNormalised === 'arrowleft' || eventKeyNormalised === 'a') {
                     newIndex = (currentIndex - 1 + thumbnails.length) % thumbnails.length;
-                } else if (event.key === 'ArrowRight') {
+                } else if (eventKeyNormalised === 'arrowright' || eventKeyNormalised === 'd') {
                     newIndex = (currentIndex + 1) % thumbnails.length;
                 }
 
