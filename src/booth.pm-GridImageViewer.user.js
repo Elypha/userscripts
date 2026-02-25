@@ -1,13 +1,13 @@
 // ==UserScript==
 // @name         booth.pm: Grid Image Viewer
 // @namespace    https://github.com/Elypha/userscript
-// @version      1.1
-// @description  Adds a button to view all preview images in an overlay with a main viewer and a thumbnail grid.
+// @version      1.2
+// @description  View all preview images in an overlay with a main viewer and a thumbnail grid.
 // @author       Elypha
 // @match        https://booth.pm/*/items/*
 // @match        https://*.booth.pm/items/*
 // @grant        GM_addStyle
-// @require      https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.js
+// @require      https://cdn.jsdelivr.net/npm/jquery@4.0.0/dist/jquery.js
 // @require      https://cdn.jsdelivr.net/npm/lightbox2@2.11.5/dist/js/lightbox.min.js
 // ==/UserScript==
 
@@ -123,6 +123,8 @@
 
     // Viewer functionality
     function openImageViewer() {
+        if (document.querySelector('.image-viewer-overlay')) return;
+
         const imageUrls = getImageLinks();
         if (!imageUrls || imageUrls.length === 0) {
             alert("No images found.");
@@ -165,12 +167,68 @@
         });
     }
 
-    // Button to trigger the Viewer
     const viewButton = document.createElement('button');
     viewButton.innerText = 'View Images';
     viewButton.className = 'view-images-btn';
     document.body.appendChild(viewButton);
 
     viewButton.addEventListener('click', openImageViewer);
+
+
+    // Keyboard navigation
+    // --------------------------------
+    // Usage:
+    // - Tab: Open/close viewer
+    // - Left/Right Arrows: Navigate through images when viewer is open
+    //
+    // Notes:
+    // - Block default key actions by `event.preventDefault()` to avoid conflicts
+    // - When navigating with arrows, the selected thumbnail will be scrolled into view if it's out of the visible area
+    // - The navigation loops around when reaching the first or last image
+    document.addEventListener('keydown', function(event) {
+        const overlay = document.querySelector('.image-viewer-overlay');
+
+        if (event.key === 'Tab') {
+            event.preventDefault();
+            if (overlay) {
+                document.body.removeChild(overlay);
+            } else {
+                openImageViewer();
+            }
+            return;
+        }
+
+        if (overlay) {
+            if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+                event.preventDefault();
+
+                const thumbnails = overlay.querySelectorAll('.image-viewer-grid img');
+                if (thumbnails.length <= 1) return;
+
+                const currentSelected = overlay.querySelector('.image-viewer-grid img.selected');
+                let currentIndex = 0;
+
+                if (currentSelected) {
+                    currentIndex = parseInt(currentSelected.dataset.index, 10);
+                }
+
+                let newIndex = currentIndex;
+
+                if (event.key === 'ArrowLeft') {
+                    newIndex = (currentIndex - 1 + thumbnails.length) % thumbnails.length;
+                } else if (event.key === 'ArrowRight') {
+                    newIndex = (currentIndex + 1) % thumbnails.length;
+                }
+
+                if (newIndex !== currentIndex) {
+                    const targetThumb = thumbnails[newIndex];
+
+                    targetThumb.click();
+
+                    targetThumb.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                }
+            }
+        }
+    });
 
 })(jQuery);
