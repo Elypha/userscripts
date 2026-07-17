@@ -6,6 +6,8 @@ Small userscripts for a slightly more convenient life on the web.
 
 - **[Grid Image Viewer](https://github.com/Elypha/userscripts/raw/refs/heads/master/dist/booth.pm-GridImageViewer.user.js)** — View booth.pm preview images all at once in an overlay.
 - **[Quick Language Filter](https://github.com/Elypha/userscripts/raw/refs/heads/master/dist/google.com-QuickLanguageFilter.user.js)** — Filter Google results by 简体中文, 繁體中文, 日本語, or English.
+- **[Direct Links](https://github.com/Elypha/userscripts/raw/refs/heads/master/dist/DirectLinks.user.js)** — Unwrap redirect links on Biligame, Pixiv, and GameBanana.
+- **[Preferred URLs](https://github.com/Elypha/userscripts/raw/refs/heads/master/dist/PreferredURLs.user.js)** — Normalise Booth, NGA, and Wikipedia URLs to preferred forms.
 
 ## Development
 
@@ -20,7 +22,9 @@ bun run build
 Targets:
 
 - `booth-grid-image-viewer`
+- `direct-links`
 - `google-quick-language-filter`
+- `preferred-urls`
 
 Repo structure:
 
