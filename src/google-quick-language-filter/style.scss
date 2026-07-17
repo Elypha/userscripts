@@ -1,0 +1,17 @@
+.elypha-language-filter {
+  display: flex;
+  flex-direction: row;
+  flex: none;
+  align-items: center;
+  height: 45px;
+  margin-left: auto;
+
+  button {
+    height: 30px;
+    padding: 0 9px;
+    color: #fff;
+    cursor: pointer;
+    border: 1px solid #eee;
+    border-radius: 12px;
+  }
+}

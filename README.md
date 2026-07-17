@@ -1,14 +1,33 @@
-# Introduction
+# Userscripts
 
-Here are the userscripts that are available in the repository.
+Small userscripts for a slightly more convenient life on the web.
 
-Click on the <ins>**Names**</ins> to install userscripts directly via supported managers like Violentmonkey.
+## Install
 
-## booth.pm
+- **[Grid Image Viewer](https://github.com/Elypha/userscripts/raw/refs/heads/master/dist/booth.pm-GridImageViewer.user.js)** — View booth.pm preview images all at once in an overlay.
+- **[Quick Language Filter](https://github.com/Elypha/userscripts/raw/refs/heads/master/dist/google.com-QuickLanguageFilter.user.js)** — Filter Google results by 简体中文, 繁體中文, 日本語, or English.
 
-- **[Grid Image Viewer](https://github.com/Elypha/userscript/raw/refs/heads/master/src/booth.pm-GridImageViewer.user.js)**: View all preview images in an overlay with a main viewer and a thumbnail grid.
+## Development
 
+Set ScriptCat's development connection to `ws://localhost:8642` and enable automatic reconnection.
 
-## google.com
+```powershell
+bun install
+bun run dev <target>
+bun run build
+```
 
-- **[Quick Language Filter](https://github.com/Elypha/userscript/raw/refs/heads/master/src/google.com-QuickLanguageFilter.user.js)**: Filter search results in 1-click by language. Currently supports 简体中文, 繁體中文, 日本語, English.
+Targets:
+
+- `booth-grid-image-viewer`
+- `google-quick-language-filter`
+
+Repo structure:
+
+- Source code: `src/`
+- Release files: `dist/`
+- Userscript metadata definition: `scripts/targets.ts`
+
+## License
+
+[Apache License 2.0](LICENSE)
