@@ -19,6 +19,26 @@ function releaseUrls(fileName: string) {
 
 export const targets: UserscriptTarget[] = [
   {
+    id: "bilibili-hide-lottery-results",
+    entry: "src/bilibili-hide-lottery-results/main.ts",
+    fileName: "bilibili.com-HideLotteryResults.user.js",
+    userscript: {
+      name: "bilibili.com: Hide Lottery Results",
+      namespace: repositoryUrl,
+      version: "1.0.0",
+      description: "Replace lottery result posts in Bilibili space timelines with a compact placeholder.",
+      author: "Elypha",
+      license: "Apache-2.0",
+      homepageURL: repositoryUrl,
+      supportURL: `${repositoryUrl}/issues`,
+      icon: "https://www.bilibili.com/favicon.ico",
+      match: "https://space.bilibili.com/*",
+      grant: "none",
+      "run-at": "document-idle",
+      ...releaseUrls("bilibili.com-HideLotteryResults.user.js"),
+    },
+  },
+  {
     id: "direct-links",
     entry: "src/direct-links/main.ts",
     fileName: "DirectLinks.user.js",
