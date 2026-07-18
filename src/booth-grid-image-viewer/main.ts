@@ -9,21 +9,20 @@ const closeButtonClass = "elypha-booth-image-viewer-close-button";
 const openButtonClass = "elypha-booth-image-viewer-open-button";
 const selectedClass = "elypha-booth-image-viewer-selected";
 
-function getImageUrls(): string[] {
-  const slides = document.querySelectorAll<HTMLElement>("div.primary-image-area div.slick-track div.slick-slide[data-slick-index]");
+function main(): void {
+  GM_addStyle(styleText);
 
-  return Array.from(slides)
-    .filter((slide) => !slide.classList.contains("slick-cloned"))
-    .map((slide) => {
-      const image = slide.querySelector<HTMLImageElement>("img");
-      return image?.dataset.lazy || image?.src;
-    })
-    .filter((url): url is string => Boolean(url));
+  const viewButton = document.createElement("button");
+  viewButton.type = "button";
+  viewButton.textContent = "View Images";
+  viewButton.className = openButtonClass;
+  viewButton.addEventListener("click", openImageViewer);
+  document.body.appendChild(viewButton);
+
+  registerKeyboardNavigation();
 }
 
-function closeImageViewer(overlay: HTMLElement): void {
-  overlay.remove();
-}
+main();
 
 function openImageViewer(): void {
   if (document.querySelector(`.${overlayClass}`)) return;
@@ -84,23 +83,20 @@ function openImageViewer(): void {
   document.body.appendChild(overlay);
 }
 
-function getSelectedIndex(overlay: Element): number {
-  const selected = overlay.querySelector<HTMLImageElement>(`.${gridClass} img.${selectedClass}`);
-  const index = Number(selected?.dataset.index);
-  return Number.isInteger(index) ? index : 0;
+function getImageUrls(): string[] {
+  const slides = document.querySelectorAll<HTMLElement>("div.primary-image-area div.slick-track div.slick-slide[data-slick-index]");
+
+  return Array.from(slides)
+    .filter((slide) => !slide.classList.contains("slick-cloned"))
+    .map((slide) => {
+      const image = slide.querySelector<HTMLImageElement>("img");
+      return image?.dataset.lazy || image?.src;
+    })
+    .filter((url): url is string => Boolean(url));
 }
 
-function navigateImages(overlay: Element, direction: -1 | 1): void {
-  const thumbnails = overlay.querySelectorAll<HTMLImageElement>(`.${gridClass} img`);
-  if (thumbnails.length <= 1) return;
-
-  const currentIndex = getSelectedIndex(overlay);
-  const targetIndex = (currentIndex + direction + thumbnails.length) % thumbnails.length;
-  const targetThumbnail = thumbnails[targetIndex];
-  if (!targetThumbnail) return;
-
-  targetThumbnail.click();
-  targetThumbnail.scrollIntoView({ behavior: "smooth", block: "nearest" });
+function closeImageViewer(overlay: HTMLElement): void {
+  overlay.remove();
 }
 
 function registerKeyboardNavigation(): void {
@@ -133,17 +129,21 @@ function registerKeyboardNavigation(): void {
   });
 }
 
-function main(): void {
-  GM_addStyle(styleText);
+function navigateImages(overlay: Element, direction: -1 | 1): void {
+  const thumbnails = overlay.querySelectorAll<HTMLImageElement>(`.${gridClass} img`);
+  if (thumbnails.length <= 1) return;
 
-  const viewButton = document.createElement("button");
-  viewButton.type = "button";
-  viewButton.textContent = "View Images";
-  viewButton.className = openButtonClass;
-  viewButton.addEventListener("click", openImageViewer);
-  document.body.appendChild(viewButton);
+  const currentIndex = getSelectedIndex(overlay);
+  const targetIndex = (currentIndex + direction + thumbnails.length) % thumbnails.length;
+  const targetThumbnail = thumbnails[targetIndex];
+  if (!targetThumbnail) return;
 
-  registerKeyboardNavigation();
+  targetThumbnail.click();
+  targetThumbnail.scrollIntoView({ behavior: "smooth", block: "nearest" });
 }
 
-main();
+function getSelectedIndex(overlay: Element): number {
+  const selected = overlay.querySelector<HTMLImageElement>(`.${gridClass} img.${selectedClass}`);
+  const index = Number(selected?.dataset.index);
+  return Number.isInteger(index) ? index : 0;
+}

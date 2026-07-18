@@ -38,21 +38,12 @@ const languageFilters: LanguageFilter[] = [
   },
 ];
 
-function updateLanguageFilter(language: string): void {
-  const url = new URL(window.location.href);
-  url.searchParams.set("lr", language);
-  window.location.assign(url);
+async function main(): Promise<void> {
+  const toolbar = await waitForElement(toolbarSelector);
+  addLanguageFilter(toolbar);
 }
 
-function createFilterButton(filter: LanguageFilter): HTMLButtonElement {
-  const button = document.createElement("button");
-  button.type = "button";
-  button.textContent = filter.label;
-  button.title = filter.title;
-  button.style.backgroundColor = filter.colour;
-  button.addEventListener("click", () => updateLanguageFilter(filter.language));
-  return button;
-}
+void main();
 
 function addLanguageFilter(toolbar: Element): void {
   if (document.querySelector(`.${filterContainerClass}`)) return;
@@ -67,9 +58,18 @@ function addLanguageFilter(toolbar: Element): void {
   toolbar.after(container);
 }
 
-async function main(): Promise<void> {
-  const toolbar = await waitForElement(toolbarSelector);
-  addLanguageFilter(toolbar);
+function createFilterButton(filter: LanguageFilter): HTMLButtonElement {
+  const button = document.createElement("button");
+  button.type = "button";
+  button.textContent = filter.label;
+  button.title = filter.title;
+  button.style.backgroundColor = filter.colour;
+  button.addEventListener("click", () => updateLanguageFilter(filter.language));
+  return button;
 }
 
-void main();
+function updateLanguageFilter(language: string): void {
+  const url = new URL(window.location.href);
+  url.searchParams.set("lr", language);
+  window.location.assign(url);
+}

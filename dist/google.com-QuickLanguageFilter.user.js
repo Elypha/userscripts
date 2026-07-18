@@ -63,20 +63,10 @@
 			title: "English"
 		}
 	];
-	function updateLanguageFilter(language) {
-		const url = new URL(window.location.href);
-		url.searchParams.set("lr", language);
-		window.location.assign(url);
+	async function main() {
+		addLanguageFilter(await waitForElement(toolbarSelector));
 	}
-	function createFilterButton(filter) {
-		const button = document.createElement("button");
-		button.type = "button";
-		button.textContent = filter.label;
-		button.title = filter.title;
-		button.style.backgroundColor = filter.colour;
-		button.addEventListener("click", () => updateLanguageFilter(filter.language));
-		return button;
-	}
+	main();
 	function addLanguageFilter(toolbar) {
 		if (document.querySelector(`.${filterContainerClass}`)) return;
 		const style = document.createElement("style");
@@ -87,8 +77,18 @@
 		container.append(...languageFilters.map(createFilterButton));
 		toolbar.after(container);
 	}
-	async function main() {
-		addLanguageFilter(await waitForElement(toolbarSelector));
+	function createFilterButton(filter) {
+		const button = document.createElement("button");
+		button.type = "button";
+		button.textContent = filter.label;
+		button.title = filter.title;
+		button.style.backgroundColor = filter.colour;
+		button.addEventListener("click", () => updateLanguageFilter(filter.language));
+		return button;
 	}
-	main();
+	function updateLanguageFilter(language) {
+		const url = new URL(window.location.href);
+		url.searchParams.set("lr", language);
+		window.location.assign(url);
+	}
 })();

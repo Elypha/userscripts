@@ -15,6 +15,8 @@ function main(): void {
   observeLinks(linkSelector);
 }
 
+main();
+
 function cleanLinks(root: ParentNode, linkSelector: string): void {
   if (root instanceof HTMLAnchorElement && root.matches(linkSelector)) {
     cleanLink(root);
@@ -60,5 +62,3 @@ function observeLinks(linkSelector: string): void {
     subtree: true,
   });
 }
-
-main();

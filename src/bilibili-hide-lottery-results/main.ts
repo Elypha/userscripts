@@ -6,35 +6,36 @@ const bodySelector = ".bili-dyn-item__body";
 
 let currentList: Element | null = null;
 
-function hideLotteryResult(item: Element): void {
-  const description = item.querySelector(descriptionSelector);
-  if (!description || !/恭喜[\s\S]*中奖/.test(description.textContent ?? "")) return;
+const listObserver = new MutationObserver(processListMutations);
+const pageObserver = new MutationObserver(syncListIfDisconnected);
 
-  if (description.querySelectorAll(mentionSelector).length < 2) return;
-
-  const body = item.querySelector(bodySelector);
-  if (!body) return;
-
-  const placeholder = document.createElement("span");
-  placeholder.textContent = "< Lottery Removed >";
-  placeholder.style.cssText = "color: #999; display: block; font-size: 0.9em;";
-  body.replaceChildren(placeholder);
+function main(): void {
+  pageObserver.observe(document.body, { childList: true, subtree: true });
+  syncList();
 }
 
-function addItemsFromNode(node: Node, items: Set<Element>): void {
-  const element = node instanceof Element ? node : node.parentElement;
-  if (!element || !currentList?.contains(element)) return;
+main();
 
-  const containingItem = element.closest(itemSelector);
-  if (containingItem) {
-    items.add(containingItem);
-    return;
+function syncListIfDisconnected(): void {
+  if (!currentList?.isConnected) {
+    syncList();
   }
-
-  element.querySelectorAll(itemSelector).forEach((item) => items.add(item));
 }
 
-const listObserver = new MutationObserver((mutations) => {
+function syncList(): void {
+  const nextList = document.querySelector(listSelector);
+  if (nextList === currentList) return;
+
+  listObserver.disconnect();
+  currentList = nextList;
+
+  if (!currentList) return;
+
+  currentList.querySelectorAll(itemSelector).forEach(hideLotteryResult);
+  listObserver.observe(currentList, { childList: true, subtree: true, characterData: true });
+}
+
+function processListMutations(mutations: MutationRecord[]): void {
   const changedItems = new Set<Element>();
 
   for (const mutation of mutations) {
@@ -50,25 +51,32 @@ const listObserver = new MutationObserver((mutations) => {
   }
 
   changedItems.forEach(hideLotteryResult);
-});
-
-function syncList(): void {
-  const nextList = document.querySelector(listSelector);
-  if (nextList === currentList) return;
-
-  listObserver.disconnect();
-  currentList = nextList;
-
-  if (!currentList) return;
-
-  currentList.querySelectorAll(itemSelector).forEach(hideLotteryResult);
-  listObserver.observe(currentList, { childList: true, subtree: true, characterData: true });
 }
 
-const pageObserver = new MutationObserver(() => {
-  if (!currentList?.isConnected) {
-    syncList();
+function addItemsFromNode(node: Node, items: Set<Element>): void {
+  const element = node instanceof Element ? node : node.parentElement;
+  if (!element || !currentList?.contains(element)) return;
+
+  const containingItem = element.closest(itemSelector);
+  if (containingItem) {
+    items.add(containingItem);
+    return;
   }
-});
-pageObserver.observe(document.body, { childList: true, subtree: true });
-syncList();
+
+  element.querySelectorAll(itemSelector).forEach((item) => items.add(item));
+}
+
+function hideLotteryResult(item: Element): void {
+  const description = item.querySelector(descriptionSelector);
+  if (!description || !/恭喜[\s\S]*中奖/.test(description.textContent ?? "")) return;
+
+  if (description.querySelectorAll(mentionSelector).length < 2) return;
+
+  const body = item.querySelector(bodySelector);
+  if (!body) return;
+
+  const placeholder = document.createElement("span");
+  placeholder.textContent = "< Lottery Removed >";
+  placeholder.style.cssText = "color: #999; display: block; font-size: 0.9em;";
+  body.replaceChildren(placeholder);
+}

@@ -29,43 +29,6 @@
 		optionClass: "mailOptions",
 		contentClass: "messageContent"
 	}];
-	function getDirectChildren(box, className) {
-		return Array.from(box.children).filter((child) => child.classList.contains(className));
-	}
-	function expandBranchBox(box, branchType) {
-		const options = getDirectChildren(box, branchType.optionClass);
-		const contents = getDirectChildren(box, branchType.contentClass);
-		if (options.length === 0) return;
-		box.classList.add(expandedBoxClass);
-		options.forEach((option, index) => {
-			const content = contents[index];
-			if (!content) return;
-			content.classList.add(expandedContentClass);
-			if (option.nextElementSibling !== content) option.after(content);
-		});
-		contents.slice(options.length).forEach((content) => {
-			content.classList.toggle(expandedContentClass, content.innerHTML.trim() !== "");
-		});
-	}
-	function getBranchType(box) {
-		return branchTypes.find((branchType) => box.classList.contains(branchType.boxClass));
-	}
-	function collectBranchBoxes(node, root, boxes, includeDescendants) {
-		const element = node instanceof Element ? node : node.parentElement;
-		if (!element || !root.contains(element)) return;
-		for (const { boxClass } of branchTypes) {
-			const selector = `.${boxClass}`;
-			const containingBox = element.closest(selector);
-			if (containingBox && root.contains(containingBox)) boxes.add(containingBox);
-			if (includeDescendants) element.querySelectorAll(selector).forEach((box) => boxes.add(box));
-		}
-	}
-	function expandBoxes(boxes) {
-		for (const box of boxes) {
-			const branchType = getBranchType(box);
-			if (branchType) expandBranchBox(box, branchType);
-		}
-	}
 	function main() {
 		const root = document.querySelector(contentRootSelector);
 		if (!root) return;
@@ -87,4 +50,41 @@
 		});
 	}
 	main();
+	function expandBoxes(boxes) {
+		for (const box of boxes) {
+			const branchType = getBranchType(box);
+			if (branchType) expandBranchBox(box, branchType);
+		}
+	}
+	function getBranchType(box) {
+		return branchTypes.find((branchType) => box.classList.contains(branchType.boxClass));
+	}
+	function expandBranchBox(box, branchType) {
+		const options = getDirectChildren(box, branchType.optionClass);
+		const contents = getDirectChildren(box, branchType.contentClass);
+		if (options.length === 0) return;
+		box.classList.add(expandedBoxClass);
+		options.forEach((option, index) => {
+			const content = contents[index];
+			if (!content) return;
+			content.classList.add(expandedContentClass);
+			if (option.nextElementSibling !== content) option.after(content);
+		});
+		contents.slice(options.length).forEach((content) => {
+			content.classList.toggle(expandedContentClass, content.innerHTML.trim() !== "");
+		});
+	}
+	function getDirectChildren(box, className) {
+		return Array.from(box.children).filter((child) => child.classList.contains(className));
+	}
+	function collectBranchBoxes(node, root, boxes, includeDescendants) {
+		const element = node instanceof Element ? node : node.parentElement;
+		if (!element || !root.contains(element)) return;
+		for (const { boxClass } of branchTypes) {
+			const selector = `.${boxClass}`;
+			const containingBox = element.closest(selector);
+			if (containingBox && root.contains(containingBox)) boxes.add(containingBox);
+			if (includeDescendants) element.querySelectorAll(selector).forEach((box) => boxes.add(box));
+		}
+	}
 })();

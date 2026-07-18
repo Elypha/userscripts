@@ -69,6 +69,7 @@
 		cleanLinks(document, linkSelector);
 		observeLinks(linkSelector);
 	}
+	main();
 	function cleanLinks(root, linkSelector) {
 		if (root instanceof HTMLAnchorElement && root.matches(linkSelector)) cleanLink(root);
 		root.querySelectorAll(linkSelector).forEach(cleanLink);
@@ -92,5 +93,4 @@
 			subtree: true
 		});
 	}
-	main();
 })();

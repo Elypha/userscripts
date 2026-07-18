@@ -23,39 +23,19 @@
 	var mentionSelector = "span.at[data-type=\"at\"]";
 	var bodySelector = ".bili-dyn-item__body";
 	var currentList = null;
-	function hideLotteryResult(item) {
-		const description = item.querySelector(descriptionSelector);
-		if (!description || !/恭喜[\s\S]*中奖/.test(description.textContent ?? "")) return;
-		if (description.querySelectorAll(mentionSelector).length < 2) return;
-		const body = item.querySelector(bodySelector);
-		if (!body) return;
-		const placeholder = document.createElement("span");
-		placeholder.textContent = "< Lottery Removed >";
-		placeholder.style.cssText = "color: #999; display: block; font-size: 0.9em;";
-		body.replaceChildren(placeholder);
+	var listObserver = new MutationObserver(processListMutations);
+	var pageObserver = new MutationObserver(syncListIfDisconnected);
+	function main() {
+		pageObserver.observe(document.body, {
+			childList: true,
+			subtree: true
+		});
+		syncList();
 	}
-	function addItemsFromNode(node, items) {
-		const element = node instanceof Element ? node : node.parentElement;
-		if (!element || !currentList?.contains(element)) return;
-		const containingItem = element.closest(itemSelector);
-		if (containingItem) {
-			items.add(containingItem);
-			return;
-		}
-		element.querySelectorAll(itemSelector).forEach((item) => items.add(item));
+	main();
+	function syncListIfDisconnected() {
+		if (!currentList?.isConnected) syncList();
 	}
-	var listObserver = new MutationObserver((mutations) => {
-		const changedItems = new Set();
-		for (const mutation of mutations) {
-			const containingItem = (mutation.target instanceof Element ? mutation.target : mutation.target.parentElement)?.closest(itemSelector);
-			if (containingItem && currentList?.contains(containingItem)) {
-				changedItems.add(containingItem);
-				continue;
-			}
-			mutation.addedNodes.forEach((node) => addItemsFromNode(node, changedItems));
-		}
-		changedItems.forEach(hideLotteryResult);
-	});
 	function syncList() {
 		const nextList = document.querySelector(listSelector);
 		if (nextList === currentList) return;
@@ -69,11 +49,37 @@
 			characterData: true
 		});
 	}
-	new MutationObserver(() => {
-		if (!currentList?.isConnected) syncList();
-	}).observe(document.body, {
-		childList: true,
-		subtree: true
-	});
-	syncList();
+	function processListMutations(mutations) {
+		const changedItems = new Set();
+		for (const mutation of mutations) {
+			const containingItem = (mutation.target instanceof Element ? mutation.target : mutation.target.parentElement)?.closest(itemSelector);
+			if (containingItem && currentList?.contains(containingItem)) {
+				changedItems.add(containingItem);
+				continue;
+			}
+			mutation.addedNodes.forEach((node) => addItemsFromNode(node, changedItems));
+		}
+		changedItems.forEach(hideLotteryResult);
+	}
+	function addItemsFromNode(node, items) {
+		const element = node instanceof Element ? node : node.parentElement;
+		if (!element || !currentList?.contains(element)) return;
+		const containingItem = element.closest(itemSelector);
+		if (containingItem) {
+			items.add(containingItem);
+			return;
+		}
+		element.querySelectorAll(itemSelector).forEach((item) => items.add(item));
+	}
+	function hideLotteryResult(item) {
+		const description = item.querySelector(descriptionSelector);
+		if (!description || !/恭喜[\s\S]*中奖/.test(description.textContent ?? "")) return;
+		if (description.querySelectorAll(mentionSelector).length < 2) return;
+		const body = item.querySelector(bodySelector);
+		if (!body) return;
+		const placeholder = document.createElement("span");
+		placeholder.textContent = "< Lottery Removed >";
+		placeholder.style.cssText = "color: #999; display: block; font-size: 0.9em;";
+		body.replaceChildren(placeholder);
+	}
 })();

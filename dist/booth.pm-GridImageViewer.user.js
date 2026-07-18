@@ -25,16 +25,17 @@
 	var closeButtonClass = "elypha-booth-image-viewer-close-button";
 	var openButtonClass = "elypha-booth-image-viewer-open-button";
 	var selectedClass = "elypha-booth-image-viewer-selected";
-	function getImageUrls() {
-		const slides = document.querySelectorAll("div.primary-image-area div.slick-track div.slick-slide[data-slick-index]");
-		return Array.from(slides).filter((slide) => !slide.classList.contains("slick-cloned")).map((slide) => {
-			const image = slide.querySelector("img");
-			return image?.dataset.lazy || image?.src;
-		}).filter((url) => Boolean(url));
+	function main() {
+		_GM_addStyle(style_default);
+		const viewButton = document.createElement("button");
+		viewButton.type = "button";
+		viewButton.textContent = "View Images";
+		viewButton.className = openButtonClass;
+		viewButton.addEventListener("click", openImageViewer);
+		document.body.appendChild(viewButton);
+		registerKeyboardNavigation();
 	}
-	function closeImageViewer(overlay) {
-		overlay.remove();
-	}
+	main();
 	function openImageViewer() {
 		if (document.querySelector(`.${overlayClass}`)) return;
 		const imageUrls = getImageUrls();
@@ -77,21 +78,15 @@
 		});
 		document.body.appendChild(overlay);
 	}
-	function getSelectedIndex(overlay) {
-		const selected = overlay.querySelector(`.${gridClass} img.${selectedClass}`);
-		const index = Number(selected?.dataset.index);
-		return Number.isInteger(index) ? index : 0;
+	function getImageUrls() {
+		const slides = document.querySelectorAll("div.primary-image-area div.slick-track div.slick-slide[data-slick-index]");
+		return Array.from(slides).filter((slide) => !slide.classList.contains("slick-cloned")).map((slide) => {
+			const image = slide.querySelector("img");
+			return image?.dataset.lazy || image?.src;
+		}).filter((url) => Boolean(url));
 	}
-	function navigateImages(overlay, direction) {
-		const thumbnails = overlay.querySelectorAll(`.${gridClass} img`);
-		if (thumbnails.length <= 1) return;
-		const targetThumbnail = thumbnails[(getSelectedIndex(overlay) + direction + thumbnails.length) % thumbnails.length];
-		if (!targetThumbnail) return;
-		targetThumbnail.click();
-		targetThumbnail.scrollIntoView({
-			behavior: "smooth",
-			block: "nearest"
-		});
+	function closeImageViewer(overlay) {
+		overlay.remove();
 	}
 	function registerKeyboardNavigation() {
 		document.addEventListener("keydown", (event) => {
@@ -116,15 +111,20 @@
 			}
 		});
 	}
-	function main() {
-		_GM_addStyle(style_default);
-		const viewButton = document.createElement("button");
-		viewButton.type = "button";
-		viewButton.textContent = "View Images";
-		viewButton.className = openButtonClass;
-		viewButton.addEventListener("click", openImageViewer);
-		document.body.appendChild(viewButton);
-		registerKeyboardNavigation();
+	function navigateImages(overlay, direction) {
+		const thumbnails = overlay.querySelectorAll(`.${gridClass} img`);
+		if (thumbnails.length <= 1) return;
+		const targetThumbnail = thumbnails[(getSelectedIndex(overlay) + direction + thumbnails.length) % thumbnails.length];
+		if (!targetThumbnail) return;
+		targetThumbnail.click();
+		targetThumbnail.scrollIntoView({
+			behavior: "smooth",
+			block: "nearest"
+		});
 	}
-	main();
+	function getSelectedIndex(overlay) {
+		const selected = overlay.querySelector(`.${gridClass} img.${selectedClass}`);
+		const index = Number(selected?.dataset.index);
+		return Number.isInteger(index) ? index : 0;
+	}
 })();
