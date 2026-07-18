@@ -29,12 +29,12 @@
 		}
 	}
 	function unwrapBiliGame(linkUrl) {
-		if (linkUrl.hostname !== "game.bilibili.com" || linkUrl.pathname !== "/linkfilter/") return;
+		if (linkUrl.hostname !== "game.bilibili.com" || linkUrl.pathname !== "/linkfilter/") return void 0;
 		const target = linkUrl.searchParams.get("url");
 		return target ? parseHttpUrl(target) : void 0;
 	}
 	function unwrapPixiv(linkUrl) {
-		if (linkUrl.hostname !== "www.pixiv.net" || linkUrl.pathname !== "/jump.php") return;
+		if (linkUrl.hostname !== "www.pixiv.net" || linkUrl.pathname !== "/jump.php") return void 0;
 		const parameterTarget = linkUrl.searchParams.get("url");
 		if (parameterTarget) return parseHttpUrl(parameterTarget);
 		try {
@@ -45,7 +45,7 @@
 		}
 	}
 	function unwrapGameBanana(linkUrl) {
-		if (!(linkUrl.hostname === "gamebanana.com" || linkUrl.hostname === "www.gamebanana.com") || linkUrl.pathname !== "/linkfilter") return;
+		if (!(linkUrl.hostname === "gamebanana.com" || linkUrl.hostname === "www.gamebanana.com") || linkUrl.pathname !== "/linkfilter") return void 0;
 		const target = linkUrl.searchParams.get("url");
 		return target ? parseHttpUrl(target) : void 0;
 	}
