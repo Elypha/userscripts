@@ -19,6 +19,25 @@ function releaseUrls(fileName: string) {
 
 export const targets: UserscriptTarget[] = [
   {
+    id: "url-clipboard",
+    entry: "src/url-clipboard/main.ts",
+    fileName: "URLClipboard.user.js",
+    userscript: {
+      name: "URL Clipboard",
+      namespace: repositoryUrl,
+      version: "1.0.0",
+      description: "Copy the current URL in encoded or Unicode form after a flowmouse:gesture event.",
+      author: "Elypha",
+      license: "Apache-2.0",
+      homepageURL: repositoryUrl,
+      supportURL: `${repositoryUrl}/issues`,
+      match: ["http://*/*", "https://*/*"],
+      grant: ["GM.setClipboard"],
+      "run-at": "document-idle",
+      ...releaseUrls("URLClipboard.user.js"),
+    },
+  },
+  {
     id: "image-actions",
     entry: "src/image-actions/main.ts",
     fileName: "ImageActions.user.js",

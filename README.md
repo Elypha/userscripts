@@ -11,6 +11,7 @@ Small userscripts for a slightly more convenient life on the web.
 - **[Direct Links](https://github.com/Elypha/userscripts/raw/refs/heads/master/dist/DirectLinks.user.js)** — Unwrap redirect links on Biligame, Pixiv, and GameBanana.
 - **[Preferred URLs](https://github.com/Elypha/userscripts/raw/refs/heads/master/dist/PreferredURLs.user.js)** — Normalise Booth, NGA, and Wikipedia URLs to preferred forms.
 - **[Image Actions](https://github.com/Elypha/userscripts/raw/refs/heads/master/dist/ImageActions.user.js)** — On `flowmouse:gesture`, open or copy the image under the mouse.
+- **[URL Clipboard](https://github.com/Elypha/userscripts/raw/refs/heads/master/dist/URLClipboard.user.js)** — On `flowmouse:gesture`, copy the current URL in encoded or Unicode form.
 
 ## Development
 
@@ -31,6 +32,7 @@ Targets:
 - `google-quick-language-filter`
 - `image-actions`
 - `preferred-urls`
+- `url-clipboard`
 
 Repo structure:
 
