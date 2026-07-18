@@ -10,6 +10,7 @@ Small userscripts for a slightly more convenient life on the web.
 - **[Quick Language Filter](https://github.com/Elypha/userscripts/raw/refs/heads/master/dist/google.com-QuickLanguageFilter.user.js)** — Filter Google results by 简体中文, 繁體中文, 日本語, or English.
 - **[Direct Links](https://github.com/Elypha/userscripts/raw/refs/heads/master/dist/DirectLinks.user.js)** — Unwrap redirect links on Biligame, Pixiv, and GameBanana.
 - **[Preferred URLs](https://github.com/Elypha/userscripts/raw/refs/heads/master/dist/PreferredURLs.user.js)** — Normalise Booth, NGA, and Wikipedia URLs to preferred forms.
+- **[Image Actions](https://github.com/Elypha/userscripts/raw/refs/heads/master/dist/ImageActions.user.js)** — On `flowmouse:gesture`, open or copy the image under the mouse.
 
 ## Development
 
@@ -28,6 +29,7 @@ Targets:
 - `booth-grid-image-viewer`
 - `direct-links`
 - `google-quick-language-filter`
+- `image-actions`
 - `preferred-urls`
 
 Repo structure:

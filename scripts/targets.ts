@@ -19,6 +19,26 @@ function releaseUrls(fileName: string) {
 
 export const targets: UserscriptTarget[] = [
   {
+    id: "image-actions",
+    entry: "src/image-actions/main.ts",
+    fileName: "ImageActions.user.js",
+    userscript: {
+      name: "Image Actions",
+      namespace: repositoryUrl,
+      version: "1.3.1",
+      description: "Open or copy the image under the mouse after a flowmouse:gesture event.",
+      author: "Elypha",
+      license: "Apache-2.0",
+      homepageURL: repositoryUrl,
+      supportURL: `${repositoryUrl}/issues`,
+      match: ["http://*/*", "https://*/*"],
+      connect: "*",
+      grant: ["GM_addStyle", "GM.openInTab", "GM.xmlHttpRequest"],
+      "run-at": "document-idle",
+      ...releaseUrls("ImageActions.user.js"),
+    },
+  },
+  {
     id: "bilibili-hide-lottery-results",
     entry: "src/bilibili-hide-lottery-results/main.ts",
     fileName: "bilibili.com-HideLotteryResults.user.js",
