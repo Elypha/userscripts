@@ -8,18 +8,12 @@ let currentList: Element | null = null;
 
 function hideLotteryResult(item: Element): void {
   const description = item.querySelector(descriptionSelector);
-  if (!description || !/恭喜[\s\S]*中奖/.test(description.textContent ?? "")) {
-    return;
-  }
+  if (!description || !/恭喜[\s\S]*中奖/.test(description.textContent ?? "")) return;
 
-  if (description.querySelectorAll(mentionSelector).length < 2) {
-    return;
-  }
+  if (description.querySelectorAll(mentionSelector).length < 2) return;
 
   const body = item.querySelector(bodySelector);
-  if (!body) {
-    return;
-  }
+  if (!body) return;
 
   const placeholder = document.createElement("span");
   placeholder.textContent = "< Lottery Removed >";
@@ -29,9 +23,7 @@ function hideLotteryResult(item: Element): void {
 
 function addItemsFromNode(node: Node, items: Set<Element>): void {
   const element = node instanceof Element ? node : node.parentElement;
-  if (!element || !currentList?.contains(element)) {
-    return;
-  }
+  if (!element || !currentList?.contains(element)) return;
 
   const containingItem = element.closest(itemSelector);
   if (containingItem) {
@@ -62,16 +54,12 @@ const listObserver = new MutationObserver((mutations) => {
 
 function syncList(): void {
   const nextList = document.querySelector(listSelector);
-  if (nextList === currentList) {
-    return;
-  }
+  if (nextList === currentList) return;
 
   listObserver.disconnect();
   currentList = nextList;
 
-  if (!currentList) {
-    return;
-  }
+  if (!currentList) return;
 
   currentList.querySelectorAll(itemSelector).forEach(hideLotteryResult);
   listObserver.observe(currentList, { childList: true, subtree: true, characterData: true });

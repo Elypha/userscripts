@@ -55,9 +55,7 @@ function createFilterButton(filter: LanguageFilter): HTMLButtonElement {
 }
 
 function addLanguageFilter(toolbar: Element): void {
-  if (document.querySelector(`.${filterContainerClass}`)) {
-    return;
-  }
+  if (document.querySelector(`.${filterContainerClass}`)) return;
 
   const style = document.createElement("style");
   style.textContent = styleText;

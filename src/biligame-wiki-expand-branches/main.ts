@@ -23,17 +23,13 @@ function expandBranchBox(box: Element, branchType: BranchType): void {
   const options = getDirectChildren(box, branchType.optionClass);
   const contents = getDirectChildren(box, branchType.contentClass);
 
-  if (options.length === 0) {
-    return;
-  }
+  if (options.length === 0) return;
 
   box.classList.add(expandedBoxClass);
 
   options.forEach((option, index) => {
     const content = contents[index];
-    if (!content) {
-      return;
-    }
+    if (!content) return;
 
     content.classList.add(expandedContentClass);
     if (option.nextElementSibling !== content) {
@@ -52,9 +48,7 @@ function getBranchType(box: Element): BranchType | undefined {
 
 function collectBranchBoxes(node: Node, root: Element, boxes: Set<Element>, includeDescendants: boolean): void {
   const element = node instanceof Element ? node : node.parentElement;
-  if (!element || !root.contains(element)) {
-    return;
-  }
+  if (!element || !root.contains(element)) return;
 
   for (const { boxClass } of branchTypes) {
     const selector = `.${boxClass}`;
@@ -80,9 +74,7 @@ function expandBoxes(boxes: Iterable<Element>): void {
 
 function main(): void {
   const root = document.querySelector(contentRootSelector);
-  if (!root) {
-    return;
-  }
+  if (!root) return;
 
   const style = document.createElement("style");
   style.textContent = styleText;

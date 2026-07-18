@@ -7,14 +7,10 @@ export function getPreferredUrl(url: URL): URL | undefined {
 }
 
 function preferBoothUrl(url: URL): URL | undefined {
-  if (!isBoothHost(url.hostname)) {
-    return undefined;
-  }
+  if (!isBoothHost(url.hostname)) return undefined;
 
   const itemMatch = /^\/(?:[^/]+\/)?items\/(\d+)\/?$/.exec(url.pathname);
-  if (!itemMatch?.[1]) {
-    return undefined;
-  }
+  if (!itemMatch?.[1]) return undefined;
 
   return new URL(`https://booth.pm/ja/items/${itemMatch[1]}`);
 }
@@ -26,9 +22,7 @@ function isBoothHost(hostname: string): boolean {
 function preferNgaUrl(url: URL): URL | undefined {
   const isAlternativeHost = ngaAlternativeHosts.has(url.hostname);
   const isInsecurePreferredHost = url.hostname === "bbs.nga.cn" && url.protocol === "http:";
-  if (!isAlternativeHost && !isInsecurePreferredHost) {
-    return undefined;
-  }
+  if (!isAlternativeHost && !isInsecurePreferredHost) return undefined;
 
   const preferredUrl = new URL(url);
   preferredUrl.protocol = "https:";
@@ -38,9 +32,7 @@ function preferNgaUrl(url: URL): URL | undefined {
 }
 
 function preferWikipediaUrl(url: URL): URL | undefined {
-  if (!url.hostname.endsWith(".wikipedia.org")) {
-    return undefined;
-  }
+  if (!url.hostname.endsWith(".wikipedia.org")) return undefined;
 
   const preferredUrl = new URL(url);
   if (preferredUrl.hostname.endsWith(".m.wikipedia.org")) {

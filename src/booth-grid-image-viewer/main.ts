@@ -26,9 +26,7 @@ function closeImageViewer(overlay: HTMLElement): void {
 }
 
 function openImageViewer(): void {
-  if (document.querySelector(`.${overlayClass}`)) {
-    return;
-  }
+  if (document.querySelector(`.${overlayClass}`)) return;
 
   const imageUrls = getImageUrls();
   if (imageUrls.length === 0) {
@@ -37,9 +35,7 @@ function openImageViewer(): void {
   }
 
   const firstImageUrl = imageUrls[0];
-  if (!firstImageUrl) {
-    return;
-  }
+  if (!firstImageUrl) return;
 
   const overlay = document.createElement("div");
   overlay.className = overlayClass;
@@ -96,16 +92,12 @@ function getSelectedIndex(overlay: Element): number {
 
 function navigateImages(overlay: Element, direction: -1 | 1): void {
   const thumbnails = overlay.querySelectorAll<HTMLImageElement>(`.${gridClass} img`);
-  if (thumbnails.length <= 1) {
-    return;
-  }
+  if (thumbnails.length <= 1) return;
 
   const currentIndex = getSelectedIndex(overlay);
   const targetIndex = (currentIndex + direction + thumbnails.length) % thumbnails.length;
   const targetThumbnail = thumbnails[targetIndex];
-  if (!targetThumbnail) {
-    return;
-  }
+  if (!targetThumbnail) return;
 
   targetThumbnail.click();
   targetThumbnail.scrollIntoView({ behavior: "smooth", block: "nearest" });
@@ -126,9 +118,7 @@ function registerKeyboardNavigation(): void {
       return;
     }
 
-    if (!overlay) {
-      return;
-    }
+    if (!overlay) return;
 
     if (key === "escape") {
       event.preventDefault();
