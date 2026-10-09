@@ -216,7 +216,7 @@ export const targets: UserscriptTarget[] = [
     userscript: {
       name: "gamebanana.com: QOL",
       namespace: repositoryUrl,
-      version: "0.1.0",
+      version: "0.2.0",
       description: "Compact mod pages with a three-column list, horizontal sidebars, and a preloaded image gallery.",
       author: "Elypha",
       license: "Apache-2.0",

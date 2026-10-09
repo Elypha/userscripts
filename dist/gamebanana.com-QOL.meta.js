@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         gamebanana.com: QOL
 // @namespace    https://github.com/Elypha/userscripts
-// @version      0.1.0
+// @version      0.2.0
 // @author       Elypha
 // @description  Compact mod pages with a three-column list, horizontal sidebars, and a preloaded image gallery.
 // @license      Apache-2.0

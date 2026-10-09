@@ -613,7 +613,7 @@ body.gbq-detail {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    align-content: center;
+    align-content: flex-start;
     justify-content: flex-start;
     gap: 8px;
 
@@ -632,8 +632,25 @@ body.gbq-detail {
     }
 
     .gbq-component-AuthorsAndRolesModule {
+      display: block;
       flex-basis: 100%;
-      justify-content: flex-start;
+
+      > summary {
+        display: list-item;
+        width: fit-content;
+        list-style: disclosure-closed inside;
+        cursor: pointer;
+
+        &:hover,
+        &:focus-visible {
+          color: var(--gbq-accent);
+        }
+      }
+
+      &[open] > summary {
+        margin-bottom: 8px;
+        list-style-type: disclosure-open;
+      }
     }
 
     dl {

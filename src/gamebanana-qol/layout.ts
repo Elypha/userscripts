@@ -202,12 +202,12 @@ function arrangeAuthorHeader(author: HTMLElement, related: HTMLElement): void {
 
   for (const id of ["SubmitterModule", "DonationMethodsModule", "BuddyToggleModule", "SubmitterSubscriptionToggleModule", "ThanksToggleModule", "AuthorsAndRolesModule"]) {
     take(id, ".Content > *", (module) => {
-      const component = ensureSection(identity, `gbq-component-${id}`);
+      const component = ensureSection(identity, `gbq-component-${id}`, id === "AuthorsAndRolesModule" ? "details" : "div");
       component.classList.add("gbq-component");
       if (id === "AuthorsAndRolesModule") {
-        const label = document.createElement("span");
+        const label = document.createElement("summary");
         label.className = "gbq-field-label";
-        label.textContent = "Credits";
+        label.textContent = `Credits (${module.querySelectorAll(".AuthorsGroup > dl > dt.Author").length})`;
         component.append(label);
       }
       if (id === "DonationMethodsModule") {
