@@ -9,6 +9,7 @@ Small userscripts for a slightly more convenient life on the web.
 - **[Hide Lottery Results](https://github.com/Elypha/userscripts/raw/refs/heads/master/dist/bilibili.com-HideLotteryResults.user.js)** — Replace Bilibili lottery result posts with a compact placeholder.
 - **[Expand BWIKI Branches](https://github.com/Elypha/userscripts/raw/refs/heads/master/dist/wiki.biligame.com-ExpandBranches.user.js)** — Show every plot and message branch in a nested reading layout.
 - **[Grid Image Viewer](https://github.com/Elypha/userscripts/raw/refs/heads/master/dist/booth.pm-GridImageViewer.user.js)** — View booth.pm preview images all at once in an overlay.
+- **[GameBanana QOL](https://github.com/Elypha/userscripts/raw/refs/heads/master/dist/gamebanana.com-QOL.user.js)** — Compact mod category and detail pages, with card gallery buttons, Tab to toggle the viewer, and original image preloading.
 - **[Quick Language Filter](https://github.com/Elypha/userscripts/raw/refs/heads/master/dist/google.com-QuickLanguageFilter.user.js)** — Filter Google results by 简体中文, 繁體中文, 日本語, or English.
 - **[Direct Links](https://github.com/Elypha/userscripts/raw/refs/heads/master/dist/DirectLinks.user.js)** — Unwrap redirect links on Biligame, Pixiv, and GameBanana.
 - **[Preferred URLs](https://github.com/Elypha/userscripts/raw/refs/heads/master/dist/PreferredURLs.user.js)** — Normalise Booth, NGA, and Wikipedia URLs to preferred forms.
@@ -33,6 +34,7 @@ Targets:
 - `bilibili-hide-lottery-results`
 - `biligame-wiki-expand-branches`
 - `booth-grid-image-viewer`
+- `gamebanana-qol`
 - `direct-links`
 - `google-quick-language-filter`
 - `image-actions`
