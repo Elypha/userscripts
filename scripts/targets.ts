@@ -19,6 +19,28 @@ function releaseUrls(fileName: string) {
 
 export const targets: UserscriptTarget[] = [
   {
+    id: "skport-export-json",
+    entry: "src/skport-export-json/main.ts",
+    fileName: "game.skport.com-ExportJSON.user.js",
+    userscript: {
+      name: "SKPORT: Export JSON",
+      namespace: repositoryUrl,
+      version: "1.0.0",
+      description: "Export named Endfield character and weapon rosters as JSON using data already loaded by the page.",
+      author: "Elypha",
+      license: "Apache-2.0",
+      homepageURL: repositoryUrl,
+      supportURL: `${repositoryUrl}/issues`,
+      match: "https://game.skport.com/tools/endfield/*",
+      grant: "none",
+      sandbox: "raw",
+      "inject-into": "page",
+      "run-at": "document-start",
+      noframes: true,
+      ...releaseUrls("game.skport.com-ExportJSON.user.js"),
+    },
+  },
+  {
     id: "uta-net-enable-selection",
     entry: "src/uta-net-enable-selection/main.ts",
     fileName: "uta-net.com-EnableSelection.user.js",

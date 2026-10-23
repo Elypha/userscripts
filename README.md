@@ -4,6 +4,7 @@ Small userscripts for a slightly more convenient life on the web.
 
 ## Install
 
+- **[SKPORT Export JSON](https://github.com/Elypha/userscripts/raw/refs/heads/master/dist/game.skport.com-ExportJSON.user.js)** - Export owned characters and weapons. Currently works for Arknights: Endfield.
 - **[Enable Uta-Net Selection](https://github.com/Elypha/userscripts/raw/refs/heads/master/dist/uta-net.com-EnableSelection.user.js)** - Restore text selection, copying, cutting, and the context menu on Uta-Net.
 - **[Shufoo Mouse Wheel Zoom](https://github.com/Elypha/userscripts/raw/refs/heads/master/dist/asp.shufoo.net-MouseWheelZoom.user.js)** — Zoom Shufoo flyers around the mouse pointer with the wheel.
 - **[Hide Lottery Results](https://github.com/Elypha/userscripts/raw/refs/heads/master/dist/bilibili.com-HideLotteryResults.user.js)** — Replace Bilibili lottery result posts with a compact placeholder.
@@ -29,6 +30,7 @@ bun run build
 
 Targets:
 
+- `skport-export-json`
 - `uta-net-enable-selection`
 - `shufoo-mouse-wheel-zoom`
 - `bilibili-hide-lottery-results`
