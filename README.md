@@ -8,6 +8,7 @@ Small userscripts for a slightly more convenient life on the web.
 - **[Enable Uta-Net Selection](https://github.com/Elypha/userscripts/raw/refs/heads/master/dist/uta-net.com-EnableSelection.user.js)** - Restore text selection, copying, cutting, and the context menu on Uta-Net.
 - **[Shufoo Mouse Wheel Zoom](https://github.com/Elypha/userscripts/raw/refs/heads/master/dist/asp.shufoo.net-MouseWheelZoom.user.js)** — Zoom Shufoo flyers around the mouse pointer with the wheel.
 - **[Hide Lottery Results](https://github.com/Elypha/userscripts/raw/refs/heads/master/dist/bilibili.com-HideLotteryResults.user.js)** — Replace Bilibili lottery result posts with a compact placeholder.
+- **[Subtitle Toggle](https://github.com/Elypha/userscripts/raw/refs/heads/master/dist/bilibili.com-SubtitleToggle.user.js)** - Remember the subtitle switch and toggle it with hotkey on Bilibili video pages.
 - **[Expand BWIKI Branches](https://github.com/Elypha/userscripts/raw/refs/heads/master/dist/wiki.biligame.com-ExpandBranches.user.js)** — Show every plot and message branch in a nested reading layout.
 - **[Grid Image Viewer](https://github.com/Elypha/userscripts/raw/refs/heads/master/dist/booth.pm-GridImageViewer.user.js)** — View booth.pm preview images all at once in an overlay.
 - **[GameBanana QOL](https://github.com/Elypha/userscripts/raw/refs/heads/master/dist/gamebanana.com-QOL.user.js)** — Compact mod category and detail pages, with card gallery buttons, Tab to toggle the viewer, and original image preloading.
@@ -34,6 +35,7 @@ Targets:
 - `uta-net-enable-selection`
 - `shufoo-mouse-wheel-zoom`
 - `bilibili-hide-lottery-results`
+- `bilibili-subtitle-toggle`
 - `biligame-wiki-expand-branches`
 - `booth-grid-image-viewer`
 - `gamebanana-qol`
